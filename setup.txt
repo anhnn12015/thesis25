@@ -1,0 +1,13 @@
+langchain
+langchain-community
+torch
+pypdf
+sentence-transformers
+gpt4all
+faiss-cpu
+openai
+chromadb
+pdfplumber
+flask_sqlalchemy
+flask
+pymysql

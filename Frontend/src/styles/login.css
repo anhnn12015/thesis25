@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-section {
+    height: 100vh;
+    background-color: rgb(0, 0, 0);
+    padding: 40px 20px 20px 20px;
+}
+  
+  .login-container {
+    background-color: rgb(27, 26, 27);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .login-container.container {
+    max-width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px;
+}
+  
+  .login-box {
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .chat-logo {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #d1d1d1;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-input {
+    background-color: rgb(27, 26, 27);
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  .show-password {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .forgot-password {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .forgot-password a {
+    color: white;
+    text-decoration: underline;
+  }
+  
+  .login-button {
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .demo-button {
+    background-color: rgb(173, 255, 47);
+    border: none;
+    border-radius: 5px;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .create-account-container {
+    font-size: 14px;
+  }
+  
+  .create-account-link {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 744px) {
+    .login-box {
+      padding: 20px;
+    }
+  
+    .login-input {
+      padding: 8px;
+      font-size: 14px;
+    }
+  
+    .login-button, .demo-button {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .login-box {
+      padding: 15px;
+    }
+  
+    .chat-logo {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  
+    h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+  
+    .login-input {
+      padding: 7px;
+      font-size: 13px;
+    }
+  
+    .login-button, .demo-button {
+      padding: 7px;
+      font-size: 13px;
+    }
+  
+    .forgot-password {
+      font-size: 13px;
+    }
+  
+    .create-account-container {
+      font-size: 13px;
+    }
+  }
+  
