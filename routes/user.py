@@ -9,6 +9,7 @@ from services.mail_service import send_reset_email
 from config import app_config
 
 from models.user import User
+from models.qna import Conversation, Qna
 from crt_db import database
 
 
@@ -288,7 +289,7 @@ def reset_token(token):
 # Function to get reset token
 def get_reset_token(user_id, expires_sec=1800):
     s = Serializer(current_app.config['SECRET_KEY'])
-    return s.dumps({'user_id': user_id}).decode('utf-8')
+    return s.dumps({'user_id': user_id})
 
 # Function to verify reset token
 def verify_reset_token(token):
@@ -300,3 +301,43 @@ def verify_reset_token(token):
         print(str(e))
         return None
     return user_id
+@bp.route('/conversations', methods=['GET'])
+@jwt_required()
+def get_conversations():
+    try:
+        user_id = get_jwt_identity()
+        conversations = Conversation.query.filter_by(user_id=user_id).all()
+
+        history = [{
+            'conversation_id': conversation.id,
+            'created_at': conversation.created_at
+        } for conversation in conversations]
+
+        return jsonify(history), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@bp.route('/conversations/<int:conversation_id>', methods=['GET'])
+@jwt_required()
+def get_conversation_details(conversation_id):
+    try:
+        user_id = get_jwt_identity()
+        conversation = Conversation.query.filter_by(id=conversation_id, user_id=user_id).first()
+
+        if not conversation:
+            return jsonify({"error": "Conversation not found"}), 404
+
+        qnas = Qna.query.filter_by(conversation_id=conversation.id).all()
+        chat_history = [{
+            'question': qna.Question,
+            'answer': qna.Answer,
+            'timestamp': qna.created_at
+        } for qna in qnas]
+
+        return jsonify({
+            'conversation_id': conversation.id,
+            'created_at': conversation.created_at,
+            'chat_history': chat_history
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
