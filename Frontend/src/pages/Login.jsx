@@ -91,7 +91,7 @@ const Login = () => {
               {error && <div className="error">{error}</div>}
             </Form>
             <div className="create-account-container">
-              Chưa có tài khoản? <Link to="#" className="create-account-link">TẠO TÀI KHOẢN</Link>
+              Chưa có tài khoản? <Link to="/register" className="create-account-link">TẠO TÀI KHOẢN</Link>
             </div>
           </div>
         </Container>
