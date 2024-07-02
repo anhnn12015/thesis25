@@ -44,13 +44,29 @@ cached_llm = Ollama(model= "llama3")
 
 
 Chroma
+
+
+
+
+
 Chroma is an AI-native open-source vector database focused on developer productivity and happiness. Chroma is licensed under Apache 2.0.
 
+
+
+
 vector_store = Chroma.from_documents(documents=chunks, embedding=embedding, persist_directory=folder_path)
+
+
+
+
+
+
 vector_store.persist()
 
 1.4 Langchain Prompt Template
 PromptTemplate has been used from langchain to craft efficient prompts which would later be passed on to the model. The prompt also contains input variables which indicate to the model that some information will be passed in by the user.
+
+
 
 raw_prompt = PromptTemplate.from_template(
 """
@@ -61,6 +77,7 @@ If the customer hasn't asked anything yet and just said hello, introduce yoursel
 Only answer questions given by customers; if they don't ask for input, don't answer.
 Always answer in Vietnamese. [/INST] </s>
 
+
 [INST]
 Context: {context}
 Examples:
@@ -70,6 +87,8 @@ Q: Tôi muốn biết thông tin về tài khoản tiết kiệm
 A: Bạn có thể cho tôi biết chi tiết cụ thể hơn về câu hỏi của bạn không?
 [/INST]
 
+
+
 [INST]
 Question: {input}
 Answer:
@@ -77,10 +96,25 @@ Answer:
 """)
 
 1.5 Retreival Chain
+
+
+
 Retrieval Chain has been used to pass documents/embeddings to the model as context for Retrieval Augmented Generation.
+
+
+
+
 document_chain = create_stuff_documents_chain(cached_llm, raw_prompt)
+
+
+
+
+
 chain = create_retrieval_chain(retriever, document_chain)
 
 1.6 Query User Interface
+
+
+
 Demo 
 ![image](https://github.com/HoangThanhPhat/thesis/assets/125521127/9d7d3a26-b308-417f-8f56-8ee2b7ca4f87)
