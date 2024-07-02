@@ -7,7 +7,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.prompts import PromptTemplate
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from datetime import datetime
-from models.qna import Qna
+from models.qna import Qna, Conversation
 from crt_db import database
 
 
@@ -86,7 +86,9 @@ def askPDFPost():
     print("Post /ask_pdf called")
     json_content = request.json
     query = json_content.get("query")
+    conversation_id = json_content.get("conversation_id")  # Nhận conversation_id từ request
     print(f"query: {query}")
+    print(f"query: {query}, conversation_id: {conversation_id}")
 # --------------------------------------Answer--------------------------------------------
 #     # Kiểm tra cache trước
 #     cache_key = f"query:{query}"
@@ -125,11 +127,17 @@ def askPDFPost():
     # Lấy thời gian hiện tại của hệ thống
     current_time = datetime.utcnow()
 
+    # Kiểm tra nếu conversation_id có tồn tại trong cơ sở dữ liệu
+    existing_conversation = database.session.query(Conversation).filter_by(id=conversation_id).first()
+    if not existing_conversation:
+        return jsonify({"error": "Conversation not found"}), 404
+
+    # vẫn chưa tham chiếu được vào conversation để lấy conversation_id, có nghĩa là chưa nhận được phản hồi từ client về server
     # Tạo một bản ghi mới cho bảng "qna"
     new_qna = Qna(
         Question=str(query),
         Answer=str(result_answer),
-        conversation_id = "1",
+        conversation_id=conversation_id,
         created_at=current_time
     )
     try:
@@ -166,3 +174,4 @@ def askPDFPost():
 #     [/INST]
 #
 #     """----------------------------
+
