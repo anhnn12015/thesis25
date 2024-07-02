@@ -1,21 +1,48 @@
 # thesis
 Thesis Retrieval Augmented Generation Chatbot
+
+
 Author: Thanh Phat Hoang
+
+
+
 Language: Python, Reactjs.
+
+
+
 Database: mySQL.
+
+
+
 Technology: Langchain, Olama.
 ![image](https://github.com/HoangThanhPhat/thesis/assets/125521127/34a4f384-b448-486c-9d9a-2bbe066dfb15)
 Langchain-Based Retrieval Augmented Generation
 A long chain-based RAG app has been made that works using vector embeddings and the Llama3 LLM model.
 
 1.1 Data Preprocessing
+
+
+
 PDFPlumberLoader from langchain has been called in to convert all data into PDF files, combined with other embedding and text splitter technologies.
 
+
+
+
 1.2 Model Used
+
+
+
+
+
+
 The Llama3 model has been used for getting contextual chat completion.
 cached_llm = Ollama(model= "llama3")
 
 1.3 Vector Store
+
+
+
+
 Chroma
 Chroma is an AI-native open-source vector database focused on developer productivity and happiness. Chroma is licensed under Apache 2.0.
 
