@@ -64,6 +64,12 @@ vector_store = Chroma.from_documents(documents=chunks, embedding=embedding, pers
 vector_store.persist()
 
 1.4 Langchain Prompt Template
+
+
+
+
+
+
 PromptTemplate has been used from langchain to craft efficient prompts which would later be passed on to the model. The prompt also contains input variables which indicate to the model that some information will be passed in by the user.
 
 
