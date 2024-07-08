@@ -1,3 +1,14 @@
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -6,12 +17,14 @@ body {
   
   .login-section {
     height: 100vh;
-    background-color: rgb(0, 0, 0);
+    /* background-color: rgb(0, 0, 0); */
+    background-image: url(../assets/all-images/login.jpg);
     padding: 40px 20px 20px 20px;
 }
   
   .login-container {
-    background-color: rgb(27, 26, 27);
+    /* background-color: rgb(27, 26, 27); */
+    /* background-image: url(../assets/all-images/login.jpg); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,13 +38,15 @@ body {
 }
   
   .login-box {
+    animation: slideInFromTop 1s ease-out;
     padding: 40px;
     border-radius: 10px;
     text-align: center;
-    color: white;
+    color: black;
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
+    background-color: aliceblue;
   }
   
   .chat-logo {
@@ -41,7 +56,8 @@ body {
   
   h2 {
     margin-bottom: 20px;
-    color: #d1d1d1;
+    /* color: #d1d1d1; */
+    color: black;
   }
   
   form {
@@ -53,10 +69,11 @@ body {
     background-color: rgb(27, 26, 27);
     border: 1px solid gray;
     border-radius: 5px;
-    color: white;
+    /* color: white; */
     padding: 10px;
     margin-bottom: 15px;
     font-size: 16px;
+    color: black;
   }
   
   .password-container {
@@ -69,7 +86,7 @@ body {
     top: 0px;
     background: none;
     border: none;
-    color: white;
+    color: black;
     cursor: pointer;
     font-size: 14px;
   }
@@ -81,7 +98,7 @@ body {
   }
   
   .forgot-password a {
-    color: white;
+    color: black;
     text-decoration: underline;
   }
   
@@ -89,7 +106,7 @@ body {
     background-color: gray;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: black;
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
@@ -112,7 +129,7 @@ body {
   }
   
   .create-account-link {
-    color: white;
+    color: black;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -167,4 +184,8 @@ body {
       font-size: 13px;
     }
   }
+
+  .error {
+    color: red;
+}
   
