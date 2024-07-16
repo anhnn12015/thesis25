@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,6 +19,11 @@ class Config:
     MAIL_USERNAME = os.environ.get('EMAIL_USER')
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')  # Thêm dòng này
+
+    # JWT configuration
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'your_jwt_secret_key')
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=15)  # Thời gian hết hạn của access token
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)  # Thời gian hết hạn của refresh token
 
 class DevelopmentConfig(Config):
     DEBUG = True
