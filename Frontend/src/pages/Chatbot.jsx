@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Form, FormGroup, Input, Button } from 'reactstrap';
+import { Container, Form, FormGroup, Input, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import Helmet from '../components/Helmet/Helmet';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/chatbot.css';
+
+import api from '../axiosConfig';
+
+import logouser from '../assets/all-images/user (2) (1).png'
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
@@ -12,6 +16,8 @@ const Chatbot = () => {
     const messageListRef = useRef(null);
     const navigate = useNavigate();
     const { conversationId } = useParams();
+    // Delete
+    const [popoverOpen, setPopoverOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
@@ -67,7 +73,35 @@ const Chatbot = () => {
             console.log('Fetched Conversation:', data);  
     
             if (response.ok) {
-                setMessages(data.chat_history);
+                // setMessages(data.chat_history);
+                const formattedMessages = [];
+            let lastDate = null;
+
+            data.chat_history.forEach((item) => {
+                const messageDate = new Date(item.timestamp).toLocaleDateString();
+
+                if (messageDate !== lastDate) {
+                    formattedMessages.push({
+                        isDateSeparator: true,
+                        date: messageDate
+                    });
+                    lastDate = messageDate;
+                }
+
+                formattedMessages.push({
+                    fromUser: true,
+                    text: item.question,
+                    timestamp: item.timestamp
+                });
+
+                formattedMessages.push({
+                    fromUser: false,
+                    text: item.answer,
+                    timestamp: item.timestamp
+                });
+            });
+
+            setMessages(formattedMessages);
             } else {
                 console.error('Failed to fetch conversation:', response.status);
             }
@@ -86,13 +120,14 @@ const Chatbot = () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-
+    
             const data = await response.json();
             console.log('Created New Chat:', data);  
-
+    
             if (response.ok) {
                 const { conversation_id } = data;
                 navigate(`/chatbot/c/${conversation_id}`);
+                fetchConversation(conversation_id); // Lấy lịch sử cuộc trò chuyện mới tạo
             } else {
                 console.error('Failed to create new conversation:', response.status);
             }
@@ -133,7 +168,7 @@ const Chatbot = () => {
                     const answer = data.answer;
                     let botMessage = '';
                     for (let i = 0; i < answer.length; i++) {
-                        await new Promise(resolve => setTimeout(resolve, 100));
+                        await new Promise(resolve => setTimeout(resolve, 40));
                         botMessage += answer[i];
                         setMessages(prevMessages => {
                             const lastMessage = prevMessages[prevMessages.length - 1];
@@ -155,6 +190,40 @@ const Chatbot = () => {
         }
     };
 
+    const togglePopover = (conversationId) => {
+        if (popoverOpen === conversationId) {
+            setPopoverOpen(null);
+        } else {
+            setPopoverOpen(conversationId);
+        }
+    };
+
+    const handleDeleteConversation = async () => {
+        if (popoverOpen !== null) {
+            const token = localStorage.getItem('access_token');
+            try {
+                const response = await fetch(`http://localhost:8080/user/conversations/${popoverOpen}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+        
+                if (response.ok) {
+                    const updatedHistory = history.filter(conversation => conversation.conversation_id !== popoverOpen);
+                    setHistory(updatedHistory);
+                    console.log(`Deleting conversation ${popoverOpen}`);
+                    setPopoverOpen(null); // Đóng popover sau khi xử lý xong
+                } else {
+                    console.error('Failed to delete conversation:', response.status);
+                }
+            } catch (error) {
+                console.error('Error deleting conversation:', error);
+            }
+        }
+    };
+
     useEffect(() => {
         if (messageListRef.current) {
             messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
@@ -164,6 +233,7 @@ const Chatbot = () => {
     return (
         <Helmet title="Chatbot">
             <section className="chatbot-section">
+                <img src="C:/thesis/React-Car-Rental-Website/src/assets/all-images/bg.jpg" alt="" />
                 <Container className="chatbot-container">
                     <div className="chatbot-sidebar">
                         <button className="chatbot-sidebar-button new-chat" onClick={handleNewChat}>+ NEW CHAT</button>
@@ -172,14 +242,32 @@ const Chatbot = () => {
                                 <p>No conversation history found.</p>
                             ) : (
                                 history.map((conversation, index) => (
-                                    <button 
-                                        key={index} 
-                                        className="conversation-title"
-                                        onClick={() => navigate(`/chatbot/c/${conversation.conversation_id}`)}
-                                    >
-                                        <h4>Conversation {index + 1}</h4>
-                                        <p>Started at: {new Date(conversation.created_at).toLocaleString()}</p>
-                                    </button>
+                                    <div key={index} className="conversation-item">
+                                        <div className="conversation-header">
+                                            <button 
+                                                className="conversation-title"
+                                                onClick={() => navigate(`/chatbot/c/${conversation.conversation_id}`)}
+                                            >
+                                                <h4>Conversation {index + 1}</h4>
+                                                {/* <p>Started at: {new Date(conversation.created_at).toLocaleString()}</p> */}
+                                            </button>
+                                            <Button id={`popover-${index}`} type="button" onClick={() => togglePopover(conversation.conversation_id)}>
+                                                &#8285;
+                                            </Button>
+                                            <Popover
+                                                placement="bottom"
+                                                isOpen={popoverOpen === conversation.conversation_id}
+                                                target={`popover-${index}`}
+                                                toggle={() => togglePopover(conversation.conversation_id)}
+                                            >
+                                                <PopoverHeader>Options</PopoverHeader>
+                                                <PopoverBody>
+                                                    <button className="dropdown-item" onClick={handleDeleteConversation}>Delete</button>
+                                                    {/* Thêm các lựa chọn khác vào đây nếu cần */}
+                                                </PopoverBody>
+                                            </Popover>
+                                        </div>
+                                    </div>
                                 ))
                             )}
                         </div>
@@ -193,31 +281,42 @@ const Chatbot = () => {
                         <div className="chatbot-header">
                             <h2>Chatbot</h2>
                             <button className="user-icon-button" onClick={() => navigate('/edit-user')}>
-                                <img src='C:/thesis/React-Car-Rental-Website/src/assets/all-images/user.png' alt="User Icon" />
-                                👁
+                                {/* <img src={logouser} alt="User logo" /> */}
+                                <i class="fa-regular fa-user"></i>
                             </button>
                         </div>
                         <div className="chatbot-messages" ref={messageListRef}>
-                            {messages.map((message, index) => (
-                                <div
-                                    key={index}
-                                    className={`message ${message.fromUser ? 'user-message' : 'bot-message'}`}
-                                >
-                                    <div className="message-content">
-                                        {message.text}
+                                {messages.map((message, index) => {
+                                    if (message.isDateSeparator) {
+                                        return (
+                                            <div key={index} className="date-separator">
+                                                {message.date}
+                                            </div>
+                                        );
+                                    } else {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`message ${message.fromUser ? 'user-message' : 'bot-message'}`}
+                                            >
+                                                <div className="message-content">
+                                                    {message.text}
+                                                </div>
+                                                <div className="message-info">
+                                                    <span className="message-time">{formatTime(new Date(message.timestamp))}</span>
+                                                    <span className="message-sender">{message.fromUser ? 'You' : 'Bot'}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+                                })}
+                                {loading && (
+                                    <div className="message bot-message">
+                                        <p>...</p>
                                     </div>
-                                    <div className="message-info">
-                                        <span className="message-time">{formatTime(new Date(message.timestamp))}</span>
-                                        <span className="message-sender">{message.fromUser ? 'You' : 'Bot'}</span>
-                                    </div>
-                                </div>
-                            ))}
-                            {loading && (
-                                <div className="message bot-message">
-                                    <p>...</p>
-                                </div>
-                            )}
-                        </div>
+                                )}
+                            </div>
+
                         <Form onSubmit={handleSubmit} className="chatbot-form">
                             <FormGroup className="chatbot-input">
                                 <Input
@@ -240,9 +339,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
-
-
-
-
-
