@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from flask_bcrypt import check_password_hash
 from flask_bcrypt import generate_password_hash
 from pymysql import IntegrityError
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token,create_refresh_token, jwt_required, get_jwt_identity
 
 from itsdangerous import URLSafeTimedSerializer as Serializer
 from services.mail_service import send_reset_email
@@ -30,9 +30,12 @@ def login():
             user = User.query.filter_by(username=username).first()
 
             if user and check_password_hash(user.password, password):
+
+                role_id = user.roleID
                 # Tạo JWT token
                 access_token = create_access_token(identity=user.id)
-                return jsonify({"message": "Login successfully!", "access_token": access_token, "user_id": user.id}), 200
+                refresh_token = create_refresh_token(identity=user.id)
+                return jsonify({"message": "Login successfully!", "access_token": access_token, "user_id": user.id, "roleID": role_id}), 200
             else:
                 # Xác thực thất bại
                 return jsonify({"error": "Invalid username or password"}), 401
@@ -40,6 +43,15 @@ def login():
             # Xử lý các ngoại lệ và trả về thông báo lỗi
             return jsonify({"error": str(e)}), 500
 
+@bp.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh():
+    try:
+        current_user = get_jwt_identity()
+        new_access_token = create_access_token(identity=current_user)
+        return jsonify({"access_token": new_access_token}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @bp.route("/register", methods=["POST"])
 def register():
@@ -290,6 +302,7 @@ def reset_token(token):
 def get_reset_token(user_id, expires_sec=1800):
     s = Serializer(current_app.config['SECRET_KEY'])
     return s.dumps({'user_id': user_id})
+    # return s.dumps({'user_id': user_id}).decode('utf-8')
 
 # Function to verify reset token
 def verify_reset_token(token):
@@ -301,6 +314,7 @@ def verify_reset_token(token):
         print(str(e))
         return None
     return user_id
+
 @bp.route('/conversations', methods=['GET'])
 @jwt_required()
 def get_conversations():
@@ -341,3 +355,49 @@ def get_conversation_details(conversation_id):
         }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+@bp.route('/conversations', methods=['POST'])
+@jwt_required()
+def create_conversation():
+    try:
+        user_id = get_jwt_identity()
+
+        # Tạo một Conversation mới
+        new_conversation = Conversation(user_id=user_id)
+        database.session.add(new_conversation)
+        database.session.commit()
+
+        return jsonify({
+            "message": "Conversation created successfully",
+            "conversation_id": new_conversation.id,
+            "created_at": new_conversation.created_at
+        }), 201
+    except Exception as e:
+        database.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route('/conversations/<int:conversation_id>', methods=['DELETE'])
+@jwt_required()
+def delete_conversation(conversation_id):
+    try:
+        user_id = get_jwt_identity()
+
+        # Find the conversation to delete
+        conversation = Conversation.query.filter_by(id=conversation_id, user_id=user_id).first()
+
+        if not conversation:
+            return jsonify({"error": "Conversation not found or you don't have permission to delete"}), 404
+
+        # Delete associated Q&A records if needed
+        Qna.query.filter_by(conversation_id=conversation_id).delete()
+
+        # Delete the conversation itself
+        database.session.delete(conversation)
+        database.session.commit()
+
+        return jsonify({"message": "Conversation deleted successfully"}), 200
+
+    except Exception as e:
+        database.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
