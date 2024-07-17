@@ -1,0 +1,15 @@
+.dashboard-container {
+    display: flex;
+    padding-left: 250px;
+    width: 100% !important;
+    height: 100vh !important;
+    
+  }
+  
+  .dashboard-content {
+    background-color: white;
+    flex: 1;
+    padding: 20px;
+    color: black;
+  }
+  
