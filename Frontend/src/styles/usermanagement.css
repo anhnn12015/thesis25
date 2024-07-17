@@ -1,0 +1,114 @@
+button.btn.btn-outline-success.ml-2.btn.btn-primary {
+    color: beige;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 1.3rem;
+    outline: 0;
+    color: black;
+}
+
+table.table.table-striped.table-bordered.table-hover {
+    text-align: center;
+}
+
+.user-table {
+    margin-top: 20px;
+}
+
+
+/* Styles for User Management Page */
+.content-container {
+    display: flex;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .user-search {
+    margin-bottom: 20px;
+  }
+  
+  .user-table {
+    overflow-x: auto;
+  }
+  
+  .user-table table {
+    width: 100%;
+  }
+  
+  .user-table th, .user-table td {
+    text-align: center;
+  }
+  
+  .user-table th:first-child, .user-table td:first-child {
+    text-align: left;
+  }
+  
+  .user-table th {
+    background-color: #007bff; /* Primary color for table headers */
+    color: black;
+  }
+  
+  .user-table td {
+    background-color: #f8f9fa; /* Light background for table rows */
+  }
+  
+  .user-table .status-online {
+    color: #28a745; /* Green color for online status */
+  }
+  
+  .user-table .status-offline {
+    color: #dc3545; /* Red color for offline status */
+  }
+  
+  .user-search .btn-outline-success {
+    background-color: #28a745; /* Green color for search button */
+    color: #fff;
+  }
+  
+  .user-search .btn-outline-success:hover {
+    background-color: #218838;
+  }
+  
+  .modal-header {
+    background-color: #007bff; /* Primary color for modal header */
+    color: #fff;
+  }
+  
+  .modal-content {
+    border: none;
+  }
+  
+  .color-black {
+    color: #000;
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Primary color for primary buttons */
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545; /* Red color for danger buttons */
+    border-color: #dc3545;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
