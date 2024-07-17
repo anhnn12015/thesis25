@@ -3,6 +3,7 @@ import { Container, Form, FormGroup, Input, Button, Popover, PopoverHeader, Popo
 import Helmet from '../components/Helmet/Helmet';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/chatbot.css';
+import axios from 'axios';
 
 import api from '../axiosConfig';
 
@@ -136,10 +137,42 @@ const Chatbot = () => {
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('access_token');
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            // Lấy token từ localStorage
+            const token = localStorage.getItem('access_token');
+            
+            if (!token) {
+                navigate('/login');
+                return;
+            }
+    
+            // Gọi API để đăng xuất
+            const response = await axios.post(
+                'http://localhost:8080/user/logout',
+                {}, // Dữ liệu gửi đi
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+    
+            if (response.status === 200) {
+                // Xóa token khỏi localStorage
+                localStorage.removeItem('access_token');
+    
+                // Điều hướng về trang đăng nhập
+                navigate('/login');
+            } else {
+                console.error('Logout failed:', response.status);
+            }
+        } catch (error) {
+            console.error('Logout failed:', error.response ? error.response.data : error.message);
+            // Xử lý lỗi nếu cần
+        }
     };
+    
 
     const formatTime = (date) => {
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -282,7 +315,7 @@ const Chatbot = () => {
                             <h2>Chatbot</h2>
                             <button className="user-icon-button" onClick={() => navigate('/edit-user')}>
                                 {/* <img src={logouser} alt="User logo" /> */}
-                                <i class="fa-regular fa-user"></i>
+                                <i class="fa-solid fa-user"></i>
                             </button>
                         </div>
                         <div className="chatbot-messages" ref={messageListRef}>
