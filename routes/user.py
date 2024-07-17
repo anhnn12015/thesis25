@@ -15,6 +15,7 @@ from crt_db import database
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
+
 @bp.route("/login", methods=["POST"])
 def login():
     if request.method == "POST":
@@ -30,18 +31,37 @@ def login():
             user = User.query.filter_by(username=username).first()
 
             if user and check_password_hash(user.password, password):
-
                 role_id = user.roleID
                 # Tạo JWT token
                 access_token = create_access_token(identity=user.id)
                 refresh_token = create_refresh_token(identity=user.id)
-                return jsonify({"message": "Login successfully!", "access_token": access_token, "user_id": user.id, "roleID": role_id}), 200
+
+                # Cập nhật trạng thái online
+                user.is_online = True
+                database.session.commit()
+
+                return jsonify(
+                    {"message": "Login successfully!", "access_token": access_token, "refresh_token": refresh_token,
+                     "user_id": user.id, "roleID": role_id}), 200
             else:
                 # Xác thực thất bại
                 return jsonify({"error": "Invalid username or password"}), 401
         except Exception as e:
             # Xử lý các ngoại lệ và trả về thông báo lỗi
             return jsonify({"error": str(e)}), 500
+
+@bp.route("/logout", methods=["POST"])
+@jwt_required()
+def logout():
+    try:
+        current_user = get_jwt_identity()
+        user = User.query.get(current_user)
+        if user:
+            user.is_online = False
+            database.session.commit()
+        return jsonify({"message": "Logout successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @bp.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
@@ -201,6 +221,7 @@ def get_all_users():
                 "phone": user.phone,
                 "email": user.email,
                 "address": user.address,
+                "status": "online" if user.is_online else "offline",
                 "roleID": user.roleID
             }
             users_data.append(user_data)
