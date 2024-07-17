@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
 from config import app_config
 from crt_db import database
 from flask_jwt_extended import JWTManager
@@ -10,6 +11,7 @@ from dotenv import load_dotenv
 # from services.logging_service import setup_logging
 from services.mail_service import init_mail,mail
 jwt = JWTManager()
+migrate = Migrate()
 
 cache = Cache(config={
     "CACHE_TYPE": "SimpleCache",  # Loại cache đơn giản
@@ -21,15 +23,20 @@ def create_app(config_name):
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
     CORS(app, supports_credentials=True)
     app.config.from_object(app_config[config_name])
+
     database.init_app(app)
+    migrate.init_app(app, database)
+
     jwt.init_app(app)
     cache.init_app(app)
     # setup_logging(app)
     init_mail(app)
-
     app.register_blueprint(ai.bp, url_prefix='/ai')
     app.register_blueprint(pdf.bp)
     app.register_blueprint(user.bp)
+
+    with app.app_context():
+        database.create_all()
 
     return app
 
