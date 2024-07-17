@@ -1,0 +1,73 @@
+.sidebar {
+  width: 250px; /* Độ rộng của sidebar */
+  background-color: #343a40; /* Màu nền */
+  color: #fff; /* Màu chữ */
+  padding: 20px; /* Khoảng cách đệm bên trong */
+  height: 100vh; /* Chiều cao full màn hình */
+  position: fixed; /* Cố định sidebar khi cuộn trang */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Cho phép cuộn khi nội dung quá dài */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+  flex-direction: column; /* Xếp các thành phần theo chiều dọc */
+}
+
+.sidebar-header {
+  margin-bottom: 20px; /* Khoảng cách bottom của header */
+}
+
+.sidebar-title {
+  color: #ffc107; /* Màu chữ tiêu đề */
+  text-decoration: none; /* Bỏ gạch chân của link */
+  font-size: 20px; /* Kích thước chữ tiêu đề */
+  display: flex; /* Sử dụng flexbox */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  padding: 10px; /* Khoảng cách đệm */
+  transition: all 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.sidebar-title:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.sidebar-title.active {
+  font-weight: bold; /* Đậm chữ khi active */
+}
+
+.sidebar-icon {
+  margin-right: 10px; /* Khoảng cách phải giữa icon và chữ */
+}
+
+.sidebar-menu {
+  list-style-type: none; /* Ẩn dấu chấm tròn của list */
+  padding: 0; /* Xóa khoảng cách trong */
+}
+
+.sidebar-menu li {
+  margin-bottom: 10px; /* Khoảng cách giữa các mục */
+}
+
+.sidebar-menu li a {
+  color: #fff; /* Màu chữ các mục */
+  text-decoration: none; /* Bỏ gạch chân của link */
+  display: flex; /* Sử dụng flexbox */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  transition: all 0.3s ease; /* Hiệu ứng khi hover */
+  padding: 10px; /* Khoảng cách đệm của mỗi mục */
+}
+
+.sidebar-menu li a:hover {
+  background-color: #495057; /* Màu nền khi hover */
+  border-radius: 5px; /* Bo góc */
+}
+
+.sidebar-menu li.active a {
+  background-color: #6c757d; /* Màu nền khi active */
+  border-radius: 5px; /* Bo góc */
+}
+
+
+header.sidebar-header {
+  border-bottom: 1px solid;
+}
