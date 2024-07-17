@@ -3,6 +3,7 @@ import '../styles/login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Form, FormGroup, Input, Button } from 'reactstrap';
 import Helmet from '../components/Helmet/Helmet';
+import logo from '../assets/all-images/bank (2).png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -28,9 +29,17 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('user_id', data.user_id);
-        localStorage.setItem('access_token', data.access_token);
-        navigate('/chatbot'); // Thay thế history.push bằng navigate
+        const { user_id, access_token, roleID } = data;
+
+        // Check roleID
+        if (roleID === 0 || roleID === 1) {
+          localStorage.setItem('user_id', user_id);
+          localStorage.setItem('access_token', access_token);
+
+          navigate('/chatbot');
+        } else {
+          setError('Bạn không có quyền truy cập.');
+        }
       } else {
         if (data.error === 'User not found') {
           setError('Người dùng không có tài khoản. Vui lòng đăng ký.');
@@ -52,7 +61,9 @@ const Login = () => {
       <section className="login-section">
         <Container className="login-container">
           <div className="login-box">
-            <div className="chat-logo">Chat AI</div>
+            <div className="chat-logo">
+              <img src={logo} alt="Techcombank logo" />
+            </div>
             <h2>Đăng nhập</h2>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
@@ -77,7 +88,7 @@ const Login = () => {
                   />
                   <Button 
                     type="button" 
-                    className="show-password" 
+                    className="show-password btn btn-secondary" 
                     onClick={handleShowHidePassword}
                   >
                     👁
@@ -87,7 +98,7 @@ const Login = () => {
               <div className="forgot-password">
                 <Link to="/home">Quên mật khẩu?</Link>
               </div>
-              <Button type="submit" className="login-button" block>ĐĂNG NHẬP</Button>
+              <Button type="submit" className="login-button btn btn-dark d-block w-100" block>ĐĂNG NHẬP</Button>
               {error && <div className="error">{error}</div>}
             </Form>
             <div className="create-account-container">
@@ -101,6 +112,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
