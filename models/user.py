@@ -16,3 +16,4 @@ class User(database.Model):
     address     = Column(String(200), nullable=False)
     roleID      = Column(Integer, nullable=False)
     id_chat        = relationship("Conversation", backref="user", lazy= False)
+    is_online = Column(Boolean, default=False)
