@@ -1,64 +1,108 @@
 .content-container {
-    display: flex;
-    padding-left: 250px;
-    width: 100% !important;
-    height: 100vh !important;
-  }
-  
-  .content {
-    background-color: white;
-    flex: 1;
-    padding: 20px;
-    color: black;
-  }
-  
-  .upload-form {
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .upload-header {
-    margin-bottom: 10px;
-  }
-  
-  .upload-header h3 {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .upload-body {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .upload-body input[type="file"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 3px;
-    margin-right: 10px;
-  }
-  
-  .upload-body button {
-    padding: 8px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .upload-footer {
-    margin-top: 10px;
-  }
-  
-  .upload-message {
-    margin-top: 10px;
-    font-style: italic;
-    color: #28a745;
-  }
+  display: flex;
+  padding-left: 250px;
+  width: 100% !important;
+  height: 100vh !important;
+}
 
+.content {
+  background-color: white;
+  flex: 1;
+  padding: 20px;
+  color: black;
+  flex-grow: 1; /* Đảm bảo phần tử sẽ dãn ra khi có nhiều nội dung */
+  overflow: auto; /* Cho phép cuộn nếu nội dung vượt quá kích thước của phần tử */
+}
+
+.upload-section, .control-section, .chart-section, .activity-log-section {
+  margin-bottom: 20px;
+}
+
+.upload-section h3, .control-section h3, .chart-section h3, .activity-log-section h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.upload-form {
+  display: flex;
+  align-items: center;
+}
+
+.upload-form select, .upload-form input[type="file"] {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+}
+
+.upload-form button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.upload-message {
+  margin-top: 10px;
+  font-style: italic;
+  color: #28a745;
+}
+
+.data-table {
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.data-item p {
+  margin: 0;
+}
+
+.data-item button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.chart-section .chart-container {
+  max-width: 300px; /* Adjusted size of the pie chart */
+  margin: 0 auto;
+}
+
+.activity-log-section {
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.activity-log .log-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.activity-log .log-item p {
+  margin: 0;
+}
+
+.activity-log .log-item span {
+  font-size:  12px;
+  color: gray;
+}
