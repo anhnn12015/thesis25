@@ -166,6 +166,7 @@ chain = create_retrieval_chain(retriever, document_chain)
 
 
 Demo 
+USER:
 ![image](https://github.com/user-attachments/assets/01a89c77-046d-4770-9663-22e0d72e8797)
 
 ![image](https://github.com/user-attachments/assets/75f55af3-5d49-44a2-bcbb-49ddbaf3abdd)
@@ -173,3 +174,15 @@ Demo
 ![image](https://github.com/user-attachments/assets/e99c2492-748d-4f86-9111-90d0d28b5778)
 
 ![image](https://github.com/user-attachments/assets/7dc8ea19-2649-43e5-8b3f-f4fdcf5afa52)
+
+
+
+ADMIN:
+![image](https://github.com/user-attachments/assets/8807ecfc-83f6-457b-8c5f-275b8e4d92fb)
+
+![image](https://github.com/user-attachments/assets/e04fefd6-10eb-4896-a0e6-49e7c870691d)
+
+![image](https://github.com/user-attachments/assets/7958c0b6-d602-44e5-b54a-395156bafaf6)
+
+
+
