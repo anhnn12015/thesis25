@@ -12,4 +12,106 @@
     padding: 20px;
     color: black;
   }
+
+  .info-card.conversations {
+    background: #ff6b6b;
+    color: white;
+  }
   
+  .info-card.unresolved {
+    background: #4dabf7;
+    color: white;
+  }
+  
+  .info-card.chatbot-status {
+    background: #51cf66;
+    color: white;
+  }
+  
+  
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logout-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .info-cards {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .info-card {
+    flex: 1;
+    padding: 20px;
+    margin: 0 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .today-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .weather-card {
+    flex: 2;
+    margin-right: 20px;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 8px;
+  }
+  
+  .weather-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .weather {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .weather-day {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 5px;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .weather-day p {
+    margin: 5px 0;
+  }
+  
+  .weather-day.today {
+    background-color: rgba(255, 0, 0, 0.7);
+  }
+  
+  .performance-card {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    color: #333;
+  }
