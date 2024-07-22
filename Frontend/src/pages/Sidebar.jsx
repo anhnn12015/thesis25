@@ -30,7 +30,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to={`${basePath}/botresponse`}>
+          <Link to={`${basePath}/chatbotresponse`}>
             <FontAwesomeIcon icon={faReply} className="sidebar-icon" />
             <span>Câu trả lời của bot</span>
           </Link>
