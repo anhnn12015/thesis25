@@ -1,0 +1,120 @@
+.chat-response-container {
+    display: flex;
+    padding-left: 250px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.questions-container {
+    background-color: #fff;
+    flex: 1;
+    padding: 20px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    overflow: auto; /* Allow scrolling */
+    gap: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+.conversation-detail {
+    background-color: #f7f7f7;
+    flex-grow: 1;
+    padding: 20px;
+    overflow: auto; /* Allow scrolling */
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.conversation-detail h2 {
+    color: #4CAF50; /* Theme color */
+    margin-bottom: 10px;
+}
+
+.conversation-detail p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.conversation-detail button {
+    width: auto;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block; /* Allows multiple buttons inline */
+    margin-left: 5px;
+
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+.question-item {
+    background-color: #ffffff; /* Sử dụng màu trắng tinh để nổi bật từng câu hỏi */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Thêm bóng nhẹ cho từng item */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+    cursor: pointer;
+}
+
+.question-item:hover {
+    background-color: #f8f9fa; /* Nhẹ nhàng thay đổi màu khi hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Tăng bóng khi hover */
+}
+
+.question-item p {
+    font-size: 16px;
+    color: #333;
+    margin: 0 0 10px 0; /* Thêm khoảng cách giữa text và textarea */
+}
+
+.question-item textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Thêm bóng trong */
+    resize: none; /* Ngăn không cho điều chỉnh kích thước */
+}
+
+.question-item button {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease; /* Mượt mà thay đổi màu khi hover */
+    cursor: pointer;
+}
+
+.question-item button:hover {
+    background-color: #45a049;
+}
