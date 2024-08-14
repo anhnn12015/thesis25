@@ -1,0 +1,41 @@
+.statistic-container {
+    display: flex;
+    padding-left: 250px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.statistic-main {
+    background-color: #fff;
+    flex: 1;
+    padding: 20px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    overflow: auto; /* Allow scrolling */
+    gap: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+.date-picker {
+    margin-bottom: 20px;
+}
+
+.total-questions {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+}
+
+.chart-container {
+    flex: 1;
+    background: #f9f9f9; /* Light background for the chart container */
+    padding: 20px; /* Add some padding */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Soft shadow for depth */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
