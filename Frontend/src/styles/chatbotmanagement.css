@@ -106,3 +106,64 @@
   font-size:  12px;
   color: gray;
 }
+
+.data-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.data-item {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 1fr; /* Adjust column sizes as needed */
+  border-bottom: 1px solid #ccc;
+  padding: 16px;
+  background-color: #fff;
+  align-items: center; /* Align items vertically center */
+}
+
+.data-item:last-child {
+  border-bottom: none;
+}
+
+.data-item p {
+  margin: 5px 10px; /* Add left and right margins */
+  color: #333;
+  font-size: 16px;
+}
+
+.data-item button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.data-item button:hover {
+  background-color: #45a049;
+}
+
+.upload-section, .control-section, .chart-section {
+  margin-bottom: 20px;
+}
+
+.upload-form > select, .upload-form > input, .upload-form > button {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.upload-form > button {
+  background-color: #007BFF;
+  color: white;
+}
+
+.upload-form > button:hover {
+  background-color: #0056b3;
+}
