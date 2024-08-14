@@ -8,6 +8,7 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 from services.mail_service import send_reset_email
 from config import app_config
 
+from models.FnA import Feedback, Answer
 from models.user import User
 from models.qna import Conversation, Qna
 from crt_db import database
@@ -418,6 +419,108 @@ def delete_conversation(conversation_id):
 
         return jsonify({"message": "Conversation deleted successfully"}), 200
 
+    except Exception as e:
+        database.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@bp.route("/feedback", methods=["POST"])
+@jwt_required()
+def send_feedback():
+    try:
+        user_id = get_jwt_identity()
+        data = request.json
+        feedback_text = data.get("feedback")
+
+        if not feedback_text:
+            return jsonify({"error": "Feedback text is required"}), 400
+
+        new_feedback = Feedback(
+            user_id=user_id,
+            feedback=feedback_text
+        )
+
+        database.session.add(new_feedback)
+        database.session.commit()
+
+        return jsonify({"message": "Feedback sent successfully"}), 201
+    except Exception as e:
+        database.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@bp.route("/feedback", methods=["GET"])
+@jwt_required()
+def get_feedback():
+    try:
+        feedbacks = Feedback.query.filter_by(status=False).all()  # Lọc các feedback chưa được trả lời
+        feedback_list = []
+        for feedback in feedbacks:
+            feedback_data = {
+                "id": feedback.id,
+                "feedback": feedback.feedback,
+                "created_at": feedback.created_at,
+                "user": {
+                    "id": feedback.user.id,
+                    "username": feedback.user.username
+                },
+                "answers": [
+                    {"id": answer.id, "answer": answer.answer, "created_at": answer.created_at}
+                    for answer in feedback.answers
+                ]
+            }
+            feedback_list.append(feedback_data)
+
+        return jsonify(feedback_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route("/feedback/<int:feedback_id>/answers", methods=["GET"])
+@jwt_required()
+def get_feedback_answers(feedback_id):
+    try:
+        feedback = Feedback.query.filter_by(id=feedback_id).first()
+
+        if not feedback:
+            return jsonify({"error": "Feedback not found"}), 404
+
+        answers = Answer.query.filter_by(feedback_id=feedback_id).all()
+        answers_data = [{
+            'id': answer.id,
+            'feedback_id': answer.feedback_id,
+            'answer': answer.answer,
+            'created_at': answer.created_at
+        } for answer in answers]
+
+        return jsonify(answers_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@bp.route("/feedback/<int:feedback_id>/answer", methods=["POST"])
+@jwt_required()
+def add_feedback_answer(feedback_id):
+    try:
+        data = request.json
+        answer_text = data.get("answer")
+
+        if not answer_text:
+            return jsonify({"error": "Answer text is required"}), 400
+
+        feedback = Feedback.query.filter_by(id=feedback_id).first()
+
+        if not feedback:
+            return jsonify({"error": "Feedback not found"}), 404
+
+        new_answer = Answer(
+            feedback_id=feedback_id,
+            answer=answer_text
+        )
+
+        feedback.status = True  # Cập nhật trạng thái của feedback
+
+        database.session.add(new_answer)
+        database.session.commit()
+
+        return jsonify({"message": "Answer added successfully"}), 201
     except Exception as e:
         database.session.rollback()
         return jsonify({"error": str(e)}), 500
