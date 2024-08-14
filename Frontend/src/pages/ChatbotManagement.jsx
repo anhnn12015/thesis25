@@ -134,9 +134,16 @@ const ChatbotManagement = () => {
           <div className="upload-form">
             <select onChange={handleCategoryChange}>
               <option value="">Chọn loại tài liệu</option>
-              <option value="thuế">Thuế</option>
+              <option value="Tiết Kiệm">Tiết Kiệm</option>
               <option value="khoản vay">Khoản vay</option>
               <option value="thanh toán">Thanh toán</option>
+              <option value="Thẻ">Thẻ</option>
+              <option value="Bảo Hiểm">Bảo Hiểm</option>
+              <option value="Đầu Tư">Đầu Tư</option>
+              <option value="Tài Khoản">Tài Khoản</option>
+              <option value="Hồ Sơ Bảo Hiểm">Hồ Sơ Bảo Hiểm</option>
+
+
               {/* Add more categories as needed */}
             </select>
             <input type="file" onChange={handleFileChange} />
@@ -146,18 +153,23 @@ const ChatbotManagement = () => {
         </div>
 
         <div className="control-section">
-          <h3>Kiểm soát Dữ liệu</h3>
+          <h3>Kiểm soát dữ liệu</h3>
           <div className="data-table">
+            <div className="data-item" style={{ fontWeight: 'bold', backgroundColor: '#f7f7f7' }}>
+              <p>Tên File</p>
+              <p>Loại Tài Liệu</p>
+              <p>Thời Gian Tải Lên</p>
+              <p>Thao Tác</p>
+            </div>
             {data.map((item) => (
               <div key={item.id} className="data-item">
-                <p>Tên file: {item.filename}</p> {/* Hiển thị tên file */}
-                <p>Loại tài liệu: {item.typefile}</p> {/* Hiển thị loại tài liệu */}
-                <p>Thời gian tải lên: {item.upload_time}</p> {/* Hiển thị thời gian tải lên */}
+                <p>{item.filename}</p>
+                <p>{item.typefile}</p>
+                <p>{item.upload_time}</p>
                 <button onClick={() => handleDelete(item.id)}>Xóa</button>
               </div>
             ))}
           </div>
-
 
         </div>
 
