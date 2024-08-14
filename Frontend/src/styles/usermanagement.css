@@ -75,6 +75,9 @@ table.table.table-striped.table-bordered.table-hover {
   .user-search .btn-outline-success {
     background-color: #28a745; /* Green color for search button */
     color: #fff;
+    margin-left: 10px;
+    height: fit-content;
+    margin-top: auto;
   }
   
   .user-search .btn-outline-success:hover {
@@ -112,3 +115,6 @@ table.table.table-striped.table-bordered.table-hover {
     background-color: #c82333;
   }
   
+  .user-search .d-flex .form-control{
+    width: 80% !important
+  }
