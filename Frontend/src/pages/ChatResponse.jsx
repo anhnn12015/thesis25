@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import '../../styles/Admin/ChatResponse.css';
+import axios from 'axios';
 
 const ChatResponse = () => {
-    const [conversations, setConversations] = useState([
-        { id: 1, text: 'Làm thế nào để thanh toán hóa đơn online?', user: 'User1' },
-        { id: 2, text: 'Tôi có thể vay tiền mặt không?', user: 'User2' },
-        { id: 3, text: 'Thủ tục đăng ký thẻ tín dụng ra sao?', user: 'User3' },
-        { id: 4, text: 'Lãi suất vay mua nhà hiện tại là bao nhiêu?', user: 'User4' },
-        { id: 5, text: 'Tôi cần hỗ trợ đổi mật khẩu đăng nhập.', user: 'User5' }
-    ]);
+    const [conversations, setConversations] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [response, setResponse] = useState('');
+
+    const fetchConversations = async () => {
+        try {
+            const token = localStorage.getItem('access_token');
+            const response = await axios.get('http://localhost:8080/user/feedback', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            setConversations(response.data);
+        } catch (error) {
+            console.error('Error fetching conversations:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchConversations();
+    }, []);
 
     const selectConversation = (conversation) => {
         setSelectedConversation(conversation);
         setResponse('');
     };
 
-    const handleResponseSubmit = () => {
+    const handleResponseSubmit = async () => {
         if (!response.trim()) return;
-        alert(`Response submitted for question ID ${selectedConversation.id}: ${response}`);
-        setSelectedConversation(null); // Reset selection after submitting
-        setResponse('');
+        try {
+            const token = localStorage.getItem('access_token');
+            const feedbackId = selectedConversation.id;
+            const data = {
+                answer: response
+            };
+
+            const responseApi = await axios.post(`http://localhost:8080/user/feedback/${feedbackId}/answer`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (responseApi.status === 201) {
+                // Remove the answered feedback from the list
+                setConversations(conversations.filter(conversation => conversation.id !== feedbackId));
+                setSelectedConversation(null); // Reset selection after submitting
+                setResponse('');
+                alert("Response submitted successfully!");
+            } else {
+                alert("Failed to submit response");
+            }
+        } catch (error) {
+            console.error('Error submitting response:', error);
+            alert("Error submitting response");
+        }
     };
 
     return (
@@ -34,14 +71,17 @@ const ChatResponse = () => {
                         <h2>Cuộc hội thoại cần tư vấn</h2>
                         {conversations.map(conversation => (
                             <div key={conversation.id} className="question-item" onClick={() => selectConversation(conversation)}>
-                                <p>{conversation.user}: {conversation.text}</p>
+                                <p>
+                                    <span className="username">{conversation.user.username}</span>: 
+                                    <span className="message-text">{conversation.feedback}</span>
+                                </p>
                             </div>
                         ))}
                     </>
                 ) : (
                     <div className="conversation-detail">
-                        <h2>Đang trả lời: {selectedConversation.user}</h2>
-                        <p>{selectedConversation.text}</p>
+                        <h2>Đang trả lời: {selectedConversation.user.username}</h2>
+                        <p>{selectedConversation.feedback}</p>
                         <textarea
                             value={response}
                             onChange={(e) => setResponse(e.target.value)}
