@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import axios from 'axios';
-import '../../styles/Admin/chatbotmanagement.css';
+import '../styles/chatbotmanagement.css';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 

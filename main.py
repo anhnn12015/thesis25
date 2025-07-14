@@ -21,7 +21,9 @@ def create_app(config_name):
     app = Flask(__name__)
     load_dotenv()
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-    CORS(app, supports_credentials=True)
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}, supports_credentials=True)
+
+    # CORS(app, supports_credentials=True)
     app.config.from_object(app_config[config_name])
 
     database.init_app(app)

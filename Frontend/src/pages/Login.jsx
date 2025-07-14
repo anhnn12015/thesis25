@@ -3,7 +3,7 @@ import '../styles/login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Form, FormGroup, Input, Button } from 'reactstrap';
 import Helmet from '../components/Helmet/Helmet';
-import logo from '../assets/all-images/bank (2).png';
+// import logo from '../assets/all-images/bank (2).png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -62,7 +62,7 @@ const Login = () => {
         <Container className="login-container">
           <div className="login-box">
             <div className="chat-logo">
-              <img src={logo} alt="Techcombank logo" />
+              {/* <img src={logo} alt="Techcombank logo" /> */}
             </div>
             <h2>Đăng nhập</h2>
             <Form onSubmit={handleSubmit}>

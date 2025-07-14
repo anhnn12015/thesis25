@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import '../../styles/Admin/sidebar.css';
+import '../styles/sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUsers, faComment, faReply, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
 

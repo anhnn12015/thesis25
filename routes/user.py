@@ -8,7 +8,7 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 from services.mail_service import send_reset_email
 from config import app_config
 
-from models.FnA import Feedback, Answer
+# from models.FnA import Feedback, Answer
 from models.user import User
 from models.qna import Conversation, Qna
 from crt_db import database
@@ -34,8 +34,9 @@ def login():
             if user and check_password_hash(user.password, password):
                 role_id = user.roleID
                 # Tạo JWT token
-                access_token = create_access_token(identity=user.id)
-                refresh_token = create_refresh_token(identity=user.id)
+                access_token = create_access_token(identity=str(user.id))  # ensure string
+                refresh_token = create_refresh_token(identity=str(user.id))
+
 
                 # Cập nhật trạng thái online
                 user.is_online = True

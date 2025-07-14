@@ -63,7 +63,7 @@ def pdfPost():
     new_pdf_document = PDFDocument(
         filename=file_name,
         typefile=category,
-        content=content,  # Lưu trữ nội dung nhị phân của file
+        # content=content,  # Lưu trữ nội dung nhị phân của file
         doc_len=len(docs),
         chunks_len=len(chunks)
     )
@@ -384,7 +384,7 @@ def embed_text(text):
     else:
         text = str(text)
 
-    inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True)
+    inputs = tokenizer(text, return_tensors="pt", truncation=True,padding="max_length",max_length=512,add_special_tokens=True)
     outputs = model(**inputs)
     embeddings = outputs.last_hidden_state.mean(dim=1)
 
@@ -408,7 +408,7 @@ embedding = PhoBERTEmbeddings()
 
 # Tham số tách chữ văn bản
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1024,
+    chunk_size=512,   #chunk_size=1024
     chunk_overlap=50,
     length_function=len,
     is_separator_regex=False
@@ -469,7 +469,7 @@ def pdfPost():
     new_pdf_document = PDFDocument(
         filename=file_name,
         typefile=category,
-        content=content,  # Lưu trữ nội dung nhị phân của file
+        # content=content,  # Lưu trữ nội dung nhị phân của file
         doc_len=len(docs),
         chunks_len=len(chunks)
     )
@@ -528,8 +528,20 @@ def get_pdfs():
     except Exception as e:
         print(f"Error retrieving PDF documents: {e}")
         return jsonify({"error": "Could not retrieve PDF documents"}), 500
+# from flask_cors import cross_origin
 
+# @bp.route('/ai/ask_pdf/general', methods=['POST', 'OPTIONS'])
+# @cross_origin()  # Cho phép CORS riêng cho route này nếu cần
+# def ask_pdf_general():
+#     if request.method == 'OPTIONS':
+#         return '', 204  # Trả về OK cho preflight request
 
+#     # Xử lý logic POST ở đây
+#     data = request.get_json()
+#     return jsonify({
+#         "message": "Đã nhận yêu cầu từ frontend",
+#         "data": data
+#     }), 200
 @bp.route("/activities", methods=["GET"])
 def get_activities():
     try:

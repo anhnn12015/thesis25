@@ -4,13 +4,13 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Chatbot from "../pages/Chatbot";
 import Register from "../pages/Register";
-import AdminLogin from "../pages/Admin/AdminLogin";
-import AdminDashboard from "../pages/Admin/AdminDashboard";
-import UserManagement from "../pages/Admin/UserManagement";
-import ChatbotManagement from "../pages/Admin/ChatbotManagement";
-import Settings from "../pages/Admin/Setting";
-import Statistics from "../pages/Admin/Statistic";
-import ChatResponse from "../pages/Admin/ChatResponse";
+import AdminLogin from "../pages/AdminLogin";
+import AdminDashboard from "../pages/AdminDashboard";
+import UserManagement from "../pages/UserManagement";
+import ChatbotManagement from "../pages/ChatbotManagement";
+import Settings from "../pages/Setting";
+import Statistics from "../pages/Statistic";
+import ChatResponse from "../pages/ChatResponse";
 
 const Routers = () => {
   return (

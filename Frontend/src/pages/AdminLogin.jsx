@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import '../../styles/login.css';
+import '../styles/login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Form, FormGroup, Input, Button } from 'reactstrap';
-import Helmet from '../../components/Helmet/Helmet';
-import logo from '../../assets/all-images/bank (2).png';
+import Helmet from '../components/Helmet/Helmet';
+// import logo from '../assets/all-images/bank (2).png';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -61,7 +61,7 @@ const AdminLogin = () => {
         <Container className="login-container">
           <div className="login-box">
             <div className="chat-logo">
-              <img src={logo} alt="Techcombank logo" />
+
             </div>
             <h2>Đăng nhập quản trị</h2>
             <Form onSubmit={handleSubmit}>

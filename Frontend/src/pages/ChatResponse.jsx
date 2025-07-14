@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
-import '../../styles/Admin/ChatResponse.css';
+import '../styles/ChatResponse.css';
 import axios from 'axios';
 
 const ChatResponse = () => {

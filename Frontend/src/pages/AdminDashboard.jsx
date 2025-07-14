@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Helmet from '../../components/Helmet/Helmet';
+import Helmet from '../components/Helmet/Helmet';
 import Sidebar from './Sidebar';
 import axios from 'axios';
 import { WiDaySunny, WiCloudy, WiRain } from 'react-icons/wi';
-import '../../styles/Admin/dashboard.css';
+import '../styles/dashboard.css';
 
 const AdminDashboard = () => {
   const [weather, setWeather] = useState([]);

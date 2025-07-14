@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table, Form, FormControl, Modal } from 'react-bootstrap';
 import Sidebar from './Sidebar';
 import axios from 'axios';
-import '../../styles/Admin/usermanagement.css';
+import '../styles/usermanagement.css';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]); // State to store users data

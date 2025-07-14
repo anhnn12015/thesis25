@@ -12,3 +12,7 @@ class PDFDocument(database.Model):
     upload_time = Column(DateTime, default=datetime.utcnow)
     doc_len = Column(Integer, nullable=False)
     chunks_len = Column(Integer, nullable=False)
+    # content = Column(Text, nullable=True)
+
+
+    

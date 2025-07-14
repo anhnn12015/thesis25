@@ -387,7 +387,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeUp, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 
 import api from '../axiosConfig';
-import logouser from '../assets/all-images/user (2) (1).png';
+// import logouser from '../assets/all-images/user (2) (1).png';
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
@@ -562,8 +562,8 @@ const Chatbot = () => {
     
             try {
                 setLoading(true);
-                const url = `http://localhost:8080/ai/ask_pdf/${field}`; // Update the API endpoint based on the selected field
-                const response = await fetch(url, {
+                // const url = `http://localhost:8080/ai/ask_pdf/${field}`; // Update the API endpoint based on the selected field
+                const response = await fetch(`http://localhost:8080/ai/ask_pdf`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -767,7 +767,7 @@ const Chatbot = () => {
                 <img src="C:/thesis/React-Car-Rental-Website/src/assets/all-images/bg.jpg" alt="" />
                 <Container className="chatbot-container">
                     <div className="chatbot-sidebar">
-                        <button className="chatbot-sidebar-button new-chat" onClick={handleNewChat}>+ NEW CHAT</button>
+                        <button className="chatbot-sidebar-button new-chat" onClick={handleNewChat}> NEW CHAT</button>
                         <div className="history-content">
                             {history.length === 0 ? (
                                 <p>No conversation history found.</p>
@@ -803,7 +803,7 @@ const Chatbot = () => {
                         </div>
                         <div className="chatbot-sidebar-bottom">
                             <button className="chatbot-sidebar-button support" onClick={toggleModal}>SUPPORT</button>
-                            <button className="chatbot-sidebar-button rate-app">RATE APP</button>
+                            <button className="chatbot-sidebar-button upgrate-plan">UPGRATE PLAN</button>
                             <button className="chatbot-sidebar-button logout" onClick={handleLogout}>LOG OUT</button>
                         </div>
                     </div>
